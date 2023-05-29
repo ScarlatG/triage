@@ -42,11 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.cors() // Enabling cors
 				.and()
 
-				.authorizeHttpRequests().antMatchers("/api/auth/login").permitAll()
+				.authorizeHttpRequests().antMatchers("/**").permitAll()
+				.antMatchers("/api/auth/login").permitAll().antMatchers("/h2-console/**").permitAll()
 				// tutti gli utenti autenticati possono richiedere le info
 				.antMatchers("/api/utente/userInfo").authenticated()
 				.antMatchers("/api/utente/**", "/aggiungiDottore", "/aggiornaAnagrafica", "/{id}").hasRole("ADMIN")
-				.antMatchers("/**").hasAnyRole("ADMIN", "SUB_OPERATOR")
+//				.antMatchers("/**").hasAnyRole("ADMIN", "SUB_OPERATOR")
 				// .antMatchers("/anonymous*").anonymous()
 				.anyRequest().authenticated().and()
 
@@ -60,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// Adding the JWT filter
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+		http.headers().frameOptions().disable();
 	}
 
 }

@@ -26,8 +26,7 @@ public class RuoloServiceImpl implements RuoloService {
 
 	@Transactional
 	public void aggiorna(Ruolo ruoloInstance) {
-		// TODO Auto-generated method stub
-
+		ruoloRepository.save(ruoloInstance);
 	}
 
 	@Transactional
@@ -37,12 +36,10 @@ public class RuoloServiceImpl implements RuoloService {
 
 	@Transactional
 	public void rimuovi(Long idToRemove) {
-		// TODO Auto-generated method stub
-
+		ruoloRepository.deleteById(idToRemove);
 	}
 
-	public Ruolo cercaPerDescrizioneECodice(String descrizione, String codice) {
+	public Ruolo cercaPerDescrizioneCodice(String descrizione, String codice) {
 		return ruoloRepository.findByDescrizioneAndCodice(descrizione, codice);
 	}
-
 }

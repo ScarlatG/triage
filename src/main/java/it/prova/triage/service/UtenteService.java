@@ -17,8 +17,6 @@ public interface UtenteService {
 
 	public Utente inserisciNuovo(Utente utenteInstance);
 
-	public Utente inserisciNuovo(Utente utenteInstance, StatoUtente stato);
-
 	public void rimuovi(Long idToDelete);
 
 	public List<Utente> findByExample(Utente example);
@@ -31,8 +29,5 @@ public interface UtenteService {
 
 	public Utente findByUsername(String username);
 
-	public void cambiaPassword(String confermaNuovaPassword, String name);
-
-	public void cambiaPassword(Long idUtente);
-
+	
 }

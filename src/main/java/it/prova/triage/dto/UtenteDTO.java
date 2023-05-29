@@ -2,6 +2,7 @@ package it.prova.triage.dto;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
@@ -89,4 +90,9 @@ public class UtenteDTO {
 
 		return result;
 	}
+
+	
+
+	
+	
 }

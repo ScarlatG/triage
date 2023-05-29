@@ -17,8 +17,7 @@ import it.prova.triage.repository.utente.UtenteRepository;
 @Transactional
 public class UtenteServiceImpl implements UtenteService {
 
-	@Value("${utente.password.reset.value}")
-	private String defaultPassword;
+	
 
 	@Autowired
 	private UtenteRepository repository;
@@ -40,7 +39,6 @@ public class UtenteServiceImpl implements UtenteService {
 
 	@Transactional
 	public Utente aggiorna(Utente utenteInstance) {
-		// deve aggiornare solo nome, cognome, username, ruoli
 		Utente utenteReloaded = repository.findById(utenteInstance.getId()).orElse(null);
 		if (utenteReloaded == null)
 			throw new RuntimeException("Elemento non trovato");
@@ -53,7 +51,7 @@ public class UtenteServiceImpl implements UtenteService {
 
 	@Transactional
 	public Utente inserisciNuovo(Utente utenteInstance) {
-		utenteInstance.setStato(StatoUtente.CREATO);
+		utenteInstance.setStato(StatoUtente.ATTIVO);
 		utenteInstance.setPassword(passwordEncoder.encode(utenteInstance.getPassword()));
 		utenteInstance.setDateCreated(LocalDate.now());
 		return repository.save(utenteInstance);
@@ -88,35 +86,12 @@ public class UtenteServiceImpl implements UtenteService {
 		return repository.findByUsername(username).orElse(null);
 	}
 
-	@Override
-	public Utente inserisciNuovo(Utente utenteInstance, StatoUtente stato) {
-		utenteInstance.setStato(stato);
-		utenteInstance.setPassword(passwordEncoder.encode(utenteInstance.getPassword()));
-		utenteInstance.setDateCreated(LocalDate.now());
-		return repository.save(utenteInstance);
-
-	}
 
 	@Override
 	public List<Utente> findByExample(Utente example) {
 		return repository.findByExample(example);
 	}
 
-	@Override
-	public void cambiaPassword(String confermaNuovaPassword, String name) {
-		Utente utente = repository.findByUsername(name).orElse(null);
-		utente.setPassword(passwordEncoder.encode(confermaNuovaPassword));
-		repository.save(utente);
 
-	}
-
-	@Override
-	public void cambiaPassword(Long idUtente) {
-
-		Utente utente = repository.findById(idUtente).orElse(null);
-		utente.setPassword(passwordEncoder.encode(defaultPassword));
-		repository.save(utente);
-
-	}
 
 }
