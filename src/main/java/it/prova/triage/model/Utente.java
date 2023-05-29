@@ -55,6 +55,27 @@ public class Utente {
 	@JoinTable(name = "utente_ruolo", joinColumns = @JoinColumn(name = "utente_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "ID"))
 	private Set<Ruolo> ruoli = new HashSet<>(0);
 
+	public Utente(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
+	public Utente(String username, String password, String nome, String cognome, LocalDate dateCreated) {
+		this(username, password);
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+	}
+
+	public Utente(Long id, String username, String password, String nome, String cognome, String email,
+			LocalDate dateCreated, StatoUtente stato) {
+		this(username, password, nome, cognome, dateCreated);
+		this.id = id;
+		this.email = email;
+		this.stato = stato;
+	}
+
 	public boolean isAdmin() {
 		for (Ruolo ruoloItem : ruoli) {
 			if (ruoloItem.getCodice().equals(Ruolo.ROLE_ADMIN))
